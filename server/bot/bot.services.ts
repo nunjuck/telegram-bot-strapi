@@ -79,7 +79,7 @@ class Bot {
     return "You are registered";
   }
 
-  public async sendMessageToAdmins(message: string) {
+  public async sendMessageToAdmins(requestBody: {message: string, parseMode: string}) {
     if (!this.bot) throw new Error("No connect bot");
 
     const adminChats = await strapi
@@ -90,7 +90,7 @@ class Bot {
     if (adminChats.length === 0) throw "No recipients found";
 
     const arrayOfPromises = adminChats.map((chat) => {
-      return this.bot!.sendMessage(chat.chatId, message);
+      return this.bot!.sendMessage(chat.chatId, requestBody.message, requestBody.parseMode || '');
     });
 
     await Promise.all(arrayOfPromises);

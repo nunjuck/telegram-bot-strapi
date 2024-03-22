@@ -5,7 +5,7 @@ export default ({ strapi }: { strapi: Strapi }) => ({
     try {
       ctx.body = await strapi
         .plugin("telegram-bot-strapi")
-        .telegramBot.sendMessageToAdmins(ctx.request.body.message);
+        .telegramBot.sendMessageToAdmins(ctx.request.body);
     } catch (err) {
       ctx.throw(500, err.message);
     }
